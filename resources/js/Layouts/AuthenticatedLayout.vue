@@ -13,9 +13,7 @@ const showingNavigationDropdown = ref(false);
 <template>
     <div>
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            <nav
-                class="border-b border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800"
-            >
+            <nav  class="border-b border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800">
                 <!-- Primary Navigation Menu -->
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div class="flex h-16 justify-between">
@@ -35,6 +33,12 @@ const showingNavigationDropdown = ref(false);
                                     :href="route('dashboard')"
                                     :active="route().current('dashboard')">
                                     {{ $t('Dashboard') }}
+                                </NavLink>
+                                <NavLink
+                                    v-if="$page.props.auth.user?.roles.includes('admin')"
+                                    :href="route('admin.users.index')"
+                                    :active="route().current('admin.users.index')">
+                                    {{ $t('Users') }}
                                 </NavLink>
                             </div>
                         </div>
