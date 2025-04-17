@@ -21,6 +21,16 @@ const form = useForm({
 const submit = () => {
     form.put(route('admin.users.update', props.user.id));
 };
+
+const hasRole = (roleId) => {
+    return Array.isArray(form.roles) && form.roles.includes(roleId);
+};
+
+const toggleRole = (roleId) => {
+    form.roles = hasRole(roleId)
+        ? form.roles.filter(id => id !== roleId)
+        : [...form.roles, roleId];
+};
 </script>
 
 <template>
@@ -55,9 +65,9 @@ const submit = () => {
                                 <div v-for="role in roles" :key="role.id" class="flex items-center">
                                     <Checkbox
                                         :id="`role-${role.id}`"
-                                        v-model="form.roles"
                                         :value="role.id"
-                                        :checked="form.roles.includes(role.id)"
+                                        @update:model-value="() => toggleRole(role.id)"
+                                        :checked="hasRole(role.id)"
                                     />
                                     <InputLabel :for="`role-${role.id}`" :value="role.name" :classes="`ml-2`" />
                                 </div>
