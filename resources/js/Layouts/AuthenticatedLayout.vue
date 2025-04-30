@@ -37,7 +37,7 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink
                                     v-if="$page.props.auth.user?.roles.includes('admin')"
                                     :href="route('admin.event_types.index')"
-                                    :active="route().current('admin.eventTypes.index')">
+                                    :active="route().current('admin.event_types.index')">
                                     {{ $t('Event Types') }}
                                 </NavLink>
                                 <NavLink
@@ -139,6 +139,12 @@ const showingNavigationDropdown = ref(false);
                             :href="route('dashboard')"
                             :active="route().current('dashboard')">
                             {{ $t('Dashboard') }}
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            v-if="$page.props.auth.user?.roles.includes('admin')"
+                            :href="route('admin.event_types.index')"
+                            :active="route().current('admin.event_types.index')">
+                            {{ $t('Event Types') }}
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             v-if="$page.props.auth.user?.roles.includes('admin')"

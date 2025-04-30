@@ -18,7 +18,7 @@
     td {
         display: flex;
         justify-content: flex-start;
-        align-items: center;
+        align-items: start;
         padding: 0.5rem 1rem;
     }
 

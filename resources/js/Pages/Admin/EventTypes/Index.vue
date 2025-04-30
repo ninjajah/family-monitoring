@@ -66,10 +66,10 @@ const confirmDelete = (eventType) => {
                                         eventType.id
                                     }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap" :data-label="$t('Name') + ':'">
+                                <td class="px-6 py-4" :data-label="$t('Title') + ':'">
                                     {{ eventType.name }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap" :data-label="$t('Description') + ':'">
+                                <td class="px-6 py-4" :data-label="$t('Description') + ':'">
                                     {{ eventType.description }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap" :data-label="$t('Author') + ':'">
