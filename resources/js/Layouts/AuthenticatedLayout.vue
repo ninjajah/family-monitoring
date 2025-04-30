@@ -134,6 +134,12 @@ const showingNavigationDropdown = ref(false);
                             :active="route().current('dashboard')">
                             {{ $t('Dashboard') }}
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            v-if="$page.props.auth.user?.roles.includes('admin')"
+                            :href="route('admin.users.index')"
+                            :active="route().current('admin.users.index')">
+                            {{ $t('Users') }}
+                        </ResponsiveNavLink>
                     </div>
 
                     <!-- Responsive Settings Options -->
@@ -163,14 +169,13 @@ const showingNavigationDropdown = ref(false);
             </nav>
 
             <!-- Page Heading -->
-            <header
+<!--            <header
                 class="bg-white shadow dark:bg-gray-800"
-                v-if="$slots.header"
-            >
+                v-if="$slots.header">
                 <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                     <slot name="header"/>
                 </div>
-            </header>
+            </header>-->
 
             <!-- Page Content -->
             <main>

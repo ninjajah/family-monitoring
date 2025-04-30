@@ -4,3 +4,27 @@
 :root {
     --color-scheme: dark; /* Принудительно тёмная тема */
 }
+
+@media (max-width: 767px) {
+    .hidden-mobile {
+        display: none;
+    }
+
+    tr {
+        display: block;
+        margin-bottom: 1rem;
+    }
+
+    td {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 0.5rem 1rem;
+    }
+
+    td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        margin-right: 1rem;
+    }
+}

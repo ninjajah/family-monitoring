@@ -189,6 +189,7 @@
     "Restore :name": "Restore :name",
     "results": "results",
     "Retry With": "Retry With",
+    "Roles": "Roles",
     "Save": "Save",
     "Save & Close": "Save & Close",
     "Save & Return": "Save & Return",
@@ -250,6 +251,7 @@
     "URI Too Long": "URI Too Long",
     "Use Proxy": "Use Proxy",
     "User": "User",
+    "Users": "Users",
     "Variant Also Negotiates": "Variant Also Negotiates",
     "Verify Email Address": "Verify Email Address",
     "View": "View",
@@ -259,7 +261,5 @@
     "Yes": "Yes",
     "You are receiving this email because we received a password reset request for your account.": "You are receiving this email because we received a password reset request for your account.",
     "You're logged in!": "You're logged in!",
-    "Your email address is unverified.": "Your email address is unverified.",
-    "Users": "Users",
-    "Roles": "Roles"
+    "Your email address is unverified.": "Your email address is unverified."
 }

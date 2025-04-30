@@ -48,7 +48,7 @@
     "Create :name": "Создать :name",
     "Created": "Создано",
     "Current Password": "Текущий пароль",
-    "Dashboard": "Главная",
+    "Dashboard": "Панель",
     "Delete": "Удалить",
     "Delete :name": "Удалить :name",
     "Delete Account": "Удалить аккаунт",
@@ -189,6 +189,7 @@
     "Restore :name": "Восстановить :name",
     "results": "результатов",
     "Retry With": "Повторить с",
+    "Roles": "Роли",
     "Save": "Сохранить",
     "Save & Close": "Сохранить и закрыть",
     "Save & Return": "Сохранить и вернуться",
@@ -250,6 +251,7 @@
     "URI Too Long": "URI слишком длинный",
     "Use Proxy": "Используй прокси",
     "User": "Пользователь",
+    "Users": "Пользователи",
     "Variant Also Negotiates": "Вариант тоже проводит согласование",
     "Verify Email Address": "Подтвердить адрес электронной почты",
     "View": "Просмотр",
@@ -259,7 +261,5 @@
     "Yes": "Да",
     "You are receiving this email because we received a password reset request for your account.": "Вы получили это письмо, потому что мы получили запрос на сброс пароля для Вашей учётной записи.",
     "You're logged in!": "Вы уже вошли.",
-    "Your email address is unverified.": "Ваш адрес электронной почты не подтверждён.",
-    "Users": "Пользователи",
-    "Roles": "Роли"
+    "Your email address is unverified.": "Ваш адрес электронной почты не подтверждён."
 }
