@@ -263,5 +263,8 @@
     "You're logged in!": "Вы уже вошли.",
     "Your email address is unverified.": "Ваш адрес электронной почты не подтверждён.",
     "Signals": "Сигналы",
-    "Add Signal": "Добавить сигнал"
+    "Add Signal": "Добавить сигнал",
+    "Update Signal": "Обновить сигнал",
+    "Event Types": "Типы событий",
+    "Add Event Type": "Добавить тип события"
 }

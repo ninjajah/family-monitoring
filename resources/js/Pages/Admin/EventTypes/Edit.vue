@@ -8,28 +8,28 @@ import TextInput from '@/Components/TextInput.vue';
 import TextArea from '@/Components/TextArea.vue';
 
 const props = defineProps({
-    signal: Object,
+    eventType: Object,
     users: Array,
 });
 
 const form = useForm({
-    name: props.signal.name,
-    description: props.signal.description,
-    user_id: props.signal.user_id,
+    name: props.eventType.name,
+    description: props.eventType.description,
+    user_id: props.eventType.user_id,
 });
 
 const submit = () => {
-    form.put(route('admin.signals.update', props.signal.id));
+    form.put(route('admin.event_types.update', props.eventType.id));
 };
 </script>
 
 <template>
-    <Head title="Редактировать сигнал"/>
+    <Head title="Редактировать тип события"/>
 
     <AuthenticatedLayout>
         <template #header>
             <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-                Редактировать сигнал: {{ signal.name }}
+                Редактировать: {{ eventType.name }}
             </h2>
         </template>
 
@@ -38,7 +38,7 @@ const submit = () => {
                 <div class="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800">
                     <form @submit.prevent="submit">
                         <div class="mb-4">
-                            <InputLabel for="name" value="Название сигнала"/>
+                            <InputLabel for="name" value="Название"/>
                             <TextInput
                                 id="name"
                                 v-model="form.name"
@@ -59,7 +59,7 @@ const submit = () => {
                         </div>
 
                         <div class="mb-6">
-                            <InputLabel for="user_id" value="Автор сигнала"/>
+                            <InputLabel for="user_id" value="Автор"/>
                             <select
                                 id="user_id"
                                 v-model="form.user_id"
@@ -70,7 +70,7 @@ const submit = () => {
                                     v-for="user in users"
                                     :key="user.id"
                                     :value="user.id"
-                                    :selected="user.id === signal.user_id">
+                                    :selected="user.id === eventType.user_id">
                                     {{ user.name }} ({{ user.email }})
                                 </option>
                             </select>
@@ -79,12 +79,12 @@ const submit = () => {
 
                         <div class="flex items-center justify-end">
                             <Link
-                                :href="route('admin.signals.index')"
+                                :href="route('admin.event_types.index')"
                                 class="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-400 mr-4">
                                 Отмена
                             </Link>
                             <PrimaryButton :disabled="form.processing">
-                                Сохранить изменения
+                                Сохранить
                             </PrimaryButton>
                         </div>
                     </form>

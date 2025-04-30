@@ -61,11 +61,11 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the signals for the user.
+     * Get the event types for the user.
      * @return HasMany
      */
-    public function signals(): HasMany
+    public function eventTypes(): HasMany
     {
-        return $this->hasMany(Signal::class);
+        return $this->hasMany(EventType::class);
     }
 }
