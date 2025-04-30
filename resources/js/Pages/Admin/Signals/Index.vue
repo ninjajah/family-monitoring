@@ -4,21 +4,22 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 
 defineProps({
-    users: {
+    signals: {
         type: Array,
         required: true,
         default: () => [],
     },
 });
-const confirmDelete = (user) => {
-    if (confirm(`Вы действительно хотите удалить пользователя ${user.name}?`)) {
-        router.delete(route('admin.users.destroy', user.id), {
+
+const confirmDelete = (signal) => {
+    if (confirm(`Вы действительно хотите удалить сигнал "${signal.name}"?`)) {
+        router.delete(route('admin.signals.destroy', signal.id), {
             preserveScroll: true,
             onSuccess: () => {
-                alert('Пользователь был успешно удалён.');
+                alert('Сигнал был успешно удалён.');
             },
             onError: () => {
-                alert('Не удалось удалить пользователя.');
+                alert('Не удалось удалить сигнал.');
             }
         });
     }
@@ -26,21 +27,15 @@ const confirmDelete = (user) => {
 </script>
 
 <template>
-    <Head title="Управление пользователями"/>
+    <Head title="Управление сигналами"/>
 
     <AuthenticatedLayout>
-        <template #header>
-            <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-                Управление пользователями
-            </h2>
-        </template>
-
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800">
                     <div class="flex justify-end mb-6">
-                        <Link :href="route('admin.users.create')">
-                            <PrimaryButton> Добавить пользователя</PrimaryButton>
+                        <Link :href="route('admin.signals.create')">
+                            <PrimaryButton> {{ $t('Add Signal') }}</PrimaryButton>
                         </Link>
                     </div>
                     <div class="overflow-x-auto">
@@ -51,13 +46,13 @@ const confirmDelete = (user) => {
                                     ID
                                 </th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                                    Имя
+                                    Название
                                 </th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                                    Email
+                                    Описание
                                 </th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                                    Роли
+                                    Автор
                                 </th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
                                     Действия
@@ -65,22 +60,28 @@ const confirmDelete = (user) => {
                             </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-300 md:table-row-group">
-                            <tr v-for="user in users" :key="user.id"
+                            <tr v-for="signal in signals" :key="signal.id"
                                 class="md:table-row flex flex-col md:table-row mb-4 md:mb-0">
-                                <td class="px-6 py-4 whitespace-nowrap" :data-label="$t('ID') + ':'">{{ user.id }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap" :data-label="$t('Name') + ':'">{{ user.name }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap" :data-label="$t('Email') + ':'">{{ user.email }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap" :data-label="$t('Roles') + ':'">
-                                    <span v-for="role in user.roles" :key="role.id"
-                                          class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 mr-1">
-                                        {{ role.name }}
-                                    </span>
+                                <td class="px-6 py-4 whitespace-nowrap" :data-label="$t('ID') + ':'">{{
+                                        signal.id
+                                    }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium" :data-label="$t('Actions') + ':'">
-                                    <Link :href="route('admin.users.edit', user.id)"
+                                <td class="px-6 py-4 whitespace-nowrap" :data-label="$t('Name') + ':'">
+                                    {{ signal.name }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap" :data-label="$t('Description') + ':'">
+                                    {{ signal.description }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap" :data-label="$t('Author') + ':'">
+                                    {{ signal.user?.name }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium"
+                                    :data-label="$t('Actions') + ':'">
+                                    <Link :href="route('admin.signals.edit', signal.id)"
                                           class="text-indigo-600 hover:text-indigo-900 mr-3">Редактировать
                                     </Link>
-                                    <button @click="confirmDelete(user)" class="text-red-600 hover:text-red-900">Удалить
+                                    <button @click="confirmDelete(signal)" class="text-red-600 hover:text-red-900">
+                                        Удалить
                                     </button>
                                 </td>
                             </tr>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SignalController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +39,15 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     // Разрешения роли
     Route::put('/roles/{role}/permissions', [RoleController::class, 'updatePermissions'])
         ->name('admin.roles.permissions.update');
+});
+
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
+    Route::get('/signals', [SignalController::class, 'index'])->name('admin.signals.index');
+    Route::get('/signals/create', [SignalController::class, 'create'])->name('admin.signals.create');
+    Route::post('/signals', [SignalController::class, 'store'])->name('admin.signals.store');
+    Route::get('/signals/{signal}/edit', [SignalController::class, 'edit'])->name('admin.signals.edit');
+    Route::put('/signals/{signal}', [SignalController::class, 'update'])->name('admin.signals.update');
+    Route::delete('/signals/{signal}', [SignalController::class, 'destroy'])->name('admin.signals.destroy');
 });
 
 require __DIR__ . '/auth.php';
