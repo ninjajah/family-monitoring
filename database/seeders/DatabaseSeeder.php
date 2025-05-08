@@ -16,19 +16,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $permissions = [
-            'create-user',
-            'edit-user',
-            'delete-user',
-        ];
+        /*        $permissions = [
+                    'create-user',
+                    'edit-user',
+                    'delete-user',
+                ];
 
-        foreach ($permissions as $permission) {
-            Permission::create(['name' => $permission]);
-        }
+                foreach ($permissions as $permission) {
+                    Permission::create(['name' => $permission]);
+                }
 
-        $admin = Role::create(['name' => 'admin']);
-        $admin->givePermissionTo($permissions);
+                $admin = Role::create(['name' => 'admin']);
+                $admin->givePermissionTo($permissions);
 
-        Role::create(['name' => 'user']);
+                Role::create(['name' => 'user']);*/
+
+        $this->call([
+            EventTypesSeeder::class,
+            FamilyTypesSeeder::class,
+        ]);
     }
 }
