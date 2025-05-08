@@ -43,28 +43,27 @@ const confirmDelete = (eventType) => {
                             <thead class="bg-gray-50 dark:bg-gray-700 hidden md:table-header-group">
                             <tr>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                                    ID
+                                    {{ $t('ID') }}
                                 </th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                                    Название
+                                    {{ $t('Title') }}
                                 </th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                                    Описание
+                                    {{ $t('Description') }}
                                 </th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                                    Автор
+                                    {{ $t('Author') }}
                                 </th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                                    Действия
+                                    {{ $t('Actions') }}
                                 </th>
                             </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-300 md:table-row-group">
                             <tr v-for="eventType in eventTypes" :key="eventType.id"
                                 class="md:table-row flex flex-col md:table-row mb-4 md:mb-0">
-                                <td class="px-6 py-4 whitespace-nowrap" :data-label="$t('ID') + ':'">{{
-                                        eventType.id
-                                    }}
+                                <td class="px-6 py-4 whitespace-nowrap" :data-label="$t('ID') + ':'">
+                                    {{ eventType.id }}
                                 </td>
                                 <td class="px-6 py-4" :data-label="$t('Title') + ':'">
                                     {{ eventType.name }}
@@ -78,10 +77,11 @@ const confirmDelete = (eventType) => {
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium"
                                     :data-label="$t('Actions') + ':'">
                                     <Link :href="route('admin.event_types.edit', eventType.id)"
-                                          class="text-indigo-600 hover:text-indigo-900 mr-3">Редактировать
+                                          class="text-indigo-600 hover:text-indigo-900 mr-3">
+                                        {{ $t('Edit') }}
                                     </Link>
                                     <button @click="confirmDelete(eventType)" class="text-red-600 hover:text-red-900">
-                                        Удалить
+                                        {{ $t('Delete') }}
                                     </button>
                                 </td>
                             </tr>
