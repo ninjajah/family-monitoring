@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('event_type_id')->constrained('event_types')->onDelete('cascade');
             $table->foreignId('family_type_id')->constrained('family_types')->onDelete('cascade');
-            $table->unsignedInteger('children_affected');
+            $table->unsignedInteger('children_affected')->default(0);
             $table->unsignedInteger('biological_children')->default(0);
             $table->unsignedInteger('foster_children')->default(0);
             $table->unsignedInteger('disabled_children')->default(0);

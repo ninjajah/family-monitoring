@@ -20,19 +20,23 @@ const showingNavigationDropdown = ref(false);
                         <div class="flex">
                             <!-- Logo -->
                             <div class="flex shrink-0 items-center">
-                                <Link :href="route('dashboard')">
+                                <Link :href="route('site.index')">
                                     <ApplicationLogo
                                         class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200"
                                     />
                                 </Link>
                             </div>
-
-                            <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink
-                                    :href="route('dashboard')"
-                                    :active="route().current('dashboard')">
+                                    :href="route('site.index')"
+                                    :active="route().current('site.index')">
                                     {{ $t('Dashboard') }}
+                                </NavLink>
+                                <NavLink
+                                    v-if="$page.props.auth.user?.roles.includes('admin')"
+                                    :href="route('admin.events.index')"
+                                    :active="route().current('admin.events.index')">
+                                    {{ $t('Events') }}
                                 </NavLink>
                                 <NavLink
                                     v-if="$page.props.auth.user?.roles.includes('admin')"
@@ -136,8 +140,8 @@ const showingNavigationDropdown = ref(false);
                      class="sm:hidden">
                     <div class="space-y-1 pb-3 pt-2">
                         <ResponsiveNavLink
-                            :href="route('dashboard')"
-                            :active="route().current('dashboard')">
+                            :href="route('site.index')"
+                            :active="route().current('site.index')">
                             {{ $t('Dashboard') }}
                         </ResponsiveNavLink>
                         <ResponsiveNavLink

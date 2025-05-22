@@ -48,7 +48,7 @@
     "Create :name": "Создать :name",
     "Created": "Создано",
     "Current Password": "Текущий пароль",
-    "Dashboard": "Панель",
+    "Dashboard": "Главная",
     "Delete": "Удалить",
     "Delete :name": "Удалить :name",
     "Delete Account": "Удалить аккаунт",
@@ -269,5 +269,6 @@
     "Add Event Type": "Добавить тип события",
     "Title": "Название",
     "Description": "Описание",
-    "Author": "Автор"
+    "Author": "Автор",
+    "Events": "События"
 }
