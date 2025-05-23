@@ -152,6 +152,18 @@ const showingNavigationDropdown = ref(false);
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             v-if="$page.props.auth.user?.roles.includes('admin')"
+                            :href="route('admin.reports.index')"
+                            :active="route().current('admin.reports.index')">
+                            {{ $t('Reports') }}
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            v-if="$page.props.auth.user?.roles.includes('admin')"
+                            :href="route('admin.events.index')"
+                            :active="route().current('admin.events.index')">
+                            {{ $t('Events') }}
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            v-if="$page.props.auth.user?.roles.includes('admin')"
                             :href="route('admin.event_types.index')"
                             :active="route().current('admin.event_types.index')">
                             {{ $t('Event Types') }}
