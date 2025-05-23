@@ -45,27 +45,35 @@
             </tr>
             </tbody>
         </table>
+        <!-- Модальное окно для деталей -->
+        <ReportModal
+            :show="showModal"
+            :event="currentEvent"
+            @close="showModal = false"
+        />
     </div>
 </template>
 
 <script setup>
-import {defineEmits} from 'vue';
+import {ref} from 'vue';
+import ReportModal from "@/Components/Reports/ReportModal.vue";
 
 const props = defineProps({
     events: {
         type: Array,
-        required: true,
-        default: () => []
+        required: true
     }
 });
 
-const emit = defineEmits(['showDetails']);
+const showModal = ref(false);
+const currentEvent = ref(null);
 
 const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('ru-RU');
 };
 
 const showDetails = (event) => {
-    emit('showDetails', event);
+    currentEvent.value = event;
+    showModal.value = true;
 };
 </script>

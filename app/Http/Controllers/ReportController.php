@@ -12,7 +12,9 @@ class ReportController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Admin/Reports/Index');
+        return Inertia::render('Admin/Reports/Index',[
+            'familyTypes' => FamilyType::all()->toArray()
+        ]);
     }
 
     public function newChildren(Request $request)
@@ -28,16 +30,15 @@ class ReportController extends Controller
             $validated['start_date'] . ' 00:00:00',
             $validated['end_date'] . ' 23:59:59'
         ])
-            ->with(['eventType', 'familyType']);
+            ->with(['eventType', 'familyType'])
+            ->orderBy('created_at', 'desc'); // Сортировка по дате (новые сначала)
 
         if (!empty($validated['family_type_id'])) {
             $query->where('family_type_id', $validated['family_type_id']);
         }
 
-        // Получаем список отдельных событий
         $events = $query->get();
 
-        // Считаем статистику
         $stats = [
             'families_count' => $events->count(),
             'children_count' => $events->sum('children_affected'),
@@ -76,12 +77,13 @@ class ReportController extends Controller
         ')
             ->groupBy('family_type_id');
 
-        $query = Event::joinSub($subQuery, 'last_events', function ($join) {
+        $query = Event::joinSub($subQuery, 'last_events', function($join) {
             $join->on('events.family_type_id', '=', 'last_events.family_type_id')
                 ->on('events.created_at', '=', 'last_events.last_event_date');
         })
             ->where('event_type_id', 2)
-            ->with(['eventType', 'familyType']);
+            ->with(['eventType', 'familyType'])
+            ->orderBy('events.created_at', 'desc'); // Сортировка по дате (новые сначала)
 
         if (!empty($validated['family_type_id'])) {
             $query->where('events.family_type_id', $validated['family_type_id']);
@@ -95,7 +97,7 @@ class ReportController extends Controller
                 'stats' => [
                     'families_count' => $events->count(),
                     'children_count' => $events->sum('children_affected'),
-                    'by_family_type' => $events->groupBy('family_type_id')->map(function ($group) {
+                    'by_family_type' => $events->groupBy('family_type_id')->map(function($group) {
                         return [
                             'count' => $group->count(),
                             'children' => $group->sum('children_affected')
