@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\EventTypeController;
 use App\Http\Controllers\SiteController;
@@ -57,6 +58,12 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::get('/events/{event}/edit', [EventController::class, 'edit'])->name('admin.events.edit');
     Route::put('/events/{event}', [EventController::class, 'update'])->name('admin.events.update');
     Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('admin.events.destroy');
+});
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin/reports', [ReportController::class, 'index'])->name('admin.reports.index');
+    Route::get('/admin/reports/new-children', [ReportController::class, 'newChildren'])->name('admin.reports.new-children');
+    Route::get('/admin/reports/current', [ReportController::class, 'currentStatus'])->name('admin.reports.current');
 });
 
 require __DIR__ . '/auth.php';
