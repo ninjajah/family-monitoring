@@ -1,5 +1,3 @@
-да, только сделай это для
-
 <template>
     <Head title="Отчеты"/>
     <AuthenticatedLayout>

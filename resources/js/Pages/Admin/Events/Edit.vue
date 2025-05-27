@@ -34,11 +34,11 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Редактировать событие"/>
+    <Head :title="$t('Update Event')"/>
     <AuthenticatedLayout>
         <template #header>
             <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-                Редактировать событие #{{ event.id }}
+                {{ $t('Update Event')}} #{{ event.id }}
             </h2>
         </template>
         <div class="py-12">
@@ -180,10 +180,10 @@ const submit = () => {
                             <Link
                                 :href="route('admin.events.index')"
                                 class="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-400 mr-4">
-                                Отмена
+                                {{ $t('Cancel') }}
                             </Link>
                             <PrimaryButton :disabled="form.processing">
-                                Сохранить изменения
+                                {{ $t('Save') }}
                             </PrimaryButton>
                         </div>
                     </form>

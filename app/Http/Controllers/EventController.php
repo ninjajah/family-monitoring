@@ -9,14 +9,38 @@ use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class EventController extends Controller
 {
+    /**
+     *
+     * @param Event $event
+     * @throws HttpException
+     */
+    protected function checkEventPermissions(Event $event)
+    {
+        $user = auth()->user();
+
+        if ($user->hasRole('admin')) {
+            return;
+        }
+
+        if ($event->user_id !== $user->id) {
+            abort(403, 'Вы можете работать только со своими событиями');
+        }
+    }
+
     public function index()
     {
-        $events = Event::with(['eventType', 'familyType', 'user'])
-            ->latest()
-            ->get();
+        $user = auth()->user();
+        $query = Event::with(['eventType', 'familyType', 'user']);
+
+        if (!$user->hasRole('admin')) {
+            $query->where('user_id', $user->id);
+        }
+
+        $events = $query->latest()->get();
 
         return Inertia::render('Admin/Events/Index', [
             'events' => $events,
@@ -28,7 +52,7 @@ class EventController extends Controller
         return Inertia::render('Admin/Events/Create', [
             'eventTypes' => EventType::all(),
             'familyTypes' => FamilyType::all(),
-            'users' => User::role('admin')->get(),
+            'users' => User::all(),
         ]);
     }
 
@@ -83,16 +107,20 @@ class EventController extends Controller
 
     public function edit(Event $event)
     {
+        $this->checkEventPermissions($event);
+
         return Inertia::render('Admin/Events/Edit', [
             'event' => $event->load(['eventType', 'familyType', 'user']),
             'eventTypes' => EventType::all(),
             'familyTypes' => FamilyType::all(),
-            'users' => User::role('admin')->get(),
+            'users' => User::all(),
         ]);
     }
 
     public function update(Request $request, Event $event)
     {
+        $this->checkEventPermissions($event);
+
         $validated = $request->validate([
             'event_type_id' => 'required|exists:event_types,id',
             'family_type_id' => 'required|exists:family_types,id',
@@ -116,6 +144,8 @@ class EventController extends Controller
     public function destroy(Event $event)
     {
         try {
+            $this->checkEventPermissions($event);
+
             $event->delete();
 
             return redirect()->back()

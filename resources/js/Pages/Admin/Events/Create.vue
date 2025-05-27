@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import {Head} from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import CreateEventForm from '@/Components/Events/CreateForm.vue';
 
@@ -12,12 +12,12 @@ const props = defineProps({
 </script>
 
 <template>
-    <Head title="Добавить событие" />
+    <Head :title="$t('Add Event')"/>
 
     <AuthenticatedLayout>
         <template #header>
             <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-                Добавить событие
+                {{ $t('Add Event') }}
             </h2>
         </template>
 

@@ -51,7 +51,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::delete('/event-types/{eventType}', [EventTypeController::class, 'destroy'])->name('admin.event_types.destroy');
 });
 
-Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
+Route::middleware(['auth', 'role:admin|user'])->prefix('admin')->group(function () {
     Route::get('/events', [EventController::class, 'index'])->name('admin.events.index');
     Route::get('/events/create', [EventController::class, 'create'])->name('admin.events.create');
     Route::post('/events', [EventController::class, 'store'])->name('admin.events.store');
@@ -60,7 +60,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('admin.events.destroy');
 });
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
+Route::middleware(['auth', 'role:admin|user'])->group(function () {
     Route::get('/admin/reports', [ReportController::class, 'index'])->name('admin.reports.index');
     Route::get('/admin/reports/new-children', [ReportController::class, 'newChildren'])->name('admin.reports.new-children');
     Route::get('/admin/reports/current', [ReportController::class, 'currentStatus'])->name('admin.reports.current');

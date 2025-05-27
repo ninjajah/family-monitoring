@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link, router } from '@inertiajs/vue3';
+import {Head, Link, router} from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 
@@ -27,12 +27,12 @@ const confirmDelete = (event) => {
 </script>
 
 <template>
-    <Head title="Управление событиями" />
+    <Head :title="$t('Manage Events')"/>
 
     <AuthenticatedLayout>
         <template #header>
             <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-                Управление событиями
+                {{ $t('Manage Events') }}
             </h2>
         </template>
 
@@ -41,7 +41,7 @@ const confirmDelete = (event) => {
                 <div class="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800">
                     <div class="flex justify-end mb-6">
                         <Link :href="route('admin.events.create')">
-                            <PrimaryButton>Добавить событие</PrimaryButton>
+                            <PrimaryButton>{{ $t('Add Event') }}</PrimaryButton>
                         </Link>
                     </div>
                     <div class="overflow-x-auto">
@@ -49,61 +49,61 @@ const confirmDelete = (event) => {
                             <thead class="bg-gray-50 dark:bg-gray-700 hidden md:table-header-group">
                             <tr>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                                    ID
+                                    {{ $t('ID') }}
                                 </th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                                    Тип события
+                                    {{ $t('Event Type') }}
                                 </th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                                    Тип семьи
+                                    {{ $t('Family Type') }}
                                 </th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                                    Детей
+                                    {{ $t('Children') }}
                                 </th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                                    Автор
+                                    {{ $t('Author') }}
                                 </th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                                    Дата
+                                    {{ $t('Date') }}
                                 </th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                                    Действия
+                                    {{ $t('Actions') }}
                                 </th>
                             </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-300 md:table-row-group">
                             <tr v-for="event in events" :key="event.id"
                                 class="md:table-row flex flex-col md:table-row mb-4 md:mb-0">
-                                <td class="px-6 py-4 whitespace-nowrap" :data-label="'ID:'">
+                                <td class="px-6 py-4 whitespace-nowrap" :data-label="$t('ID') + ':'">
                                     {{ event.id }}
                                 </td>
-                                <td class="px-6 py-4" :data-label="'Тип события:'">
+                                <td class="px-6 py-4" :data-label="$t('Event Type') + ':'">
                                     {{ event.event_type?.name }}
                                 </td>
-                                <td class="px-6 py-4" :data-label="'Тип семьи:'">
+                                <td class="px-6 py-4" :data-label="$t('Family Type') + ':'">
                                     {{ event.family_type?.name }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap" :data-label="'Детей:'">
+                                <td class="px-6 py-4 whitespace-nowrap" :data-label="$t('Children') + ':'">
                                     <div class="flex flex-col">
-                                        <span>Всего: {{ event.children_affected }}</span>
-                                        <span>Кровных: {{ event.biological_children }}</span>
-                                        <span>Приемных: {{ event.foster_children }}</span>
+                                        <span>{{ $t('Total') }}: {{ event.children_affected }}</span>
+                                        <span>{{ $t('Biological') }}: {{ event.biological_children }}</span>
+                                        <span>{{ $t('Foster') }}: {{ event.foster_children }}</span>
                                     </div>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap" :data-label="'Автор:'">
+                                <td class="px-6 py-4 whitespace-nowrap" :data-label="$t('Author') + ':'">
                                     {{ event.user?.name }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap" :data-label="'Дата:'">
+                                <td class="px-6 py-4 whitespace-nowrap" :data-label="$t('Date') + ':'">
                                     {{ new Date(event.created_at).toLocaleDateString() }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium" :data-label="'Действия:'">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium" :data-label="$t('Actions') + ':'">
                                     <Link :href="route('admin.events.edit', event.id)"
                                           class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 mr-3">
-                                        Редактировать
+                                        {{ $t('Edit') }}
                                     </Link>
                                     <button @click="confirmDelete(event)"
                                             class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">
-                                        Удалить
+                                        {{ $t('Delete') }}
                                     </button>
                                 </td>
                             </tr>
