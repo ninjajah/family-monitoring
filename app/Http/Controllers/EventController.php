@@ -34,7 +34,7 @@ class EventController extends Controller
         $user = auth()->user();
         $query = Event::with(['eventType', 'familyType', 'user']);
 
-        if (! $user->hasRole('admin')) {
+        if (!$user->hasRole('admin')) {
             $query->where('user_id', $user->id);
         }
 
@@ -72,10 +72,7 @@ class EventController extends Controller
         $validator->after(function ($validator) use ($request) {
             $childrenSum =
                 $request->biological_children +
-                $request->foster_children +
-                $request->disabled_children +
-                $request->children_in_family +
-                $request->children_in_institution;
+                $request->foster_children;
 
             if ($childrenSum <= 0) {
                 $validator->errors()->add(
@@ -92,10 +89,7 @@ class EventController extends Controller
         $validated = $validator->validated();
         $validated['children_affected'] =
             $validated['biological_children'] +
-            $validated['foster_children'] +
-            $validated['disabled_children'] +
-            $validated['children_in_family'] +
-            $validated['children_in_institution'];
+            $validated['foster_children'];
 
         Event::create($validated);
 
