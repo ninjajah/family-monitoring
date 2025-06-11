@@ -20,7 +20,7 @@ class Event extends Model
         'children_in_family',
         'children_in_institution',
         'notes',
-        'user_id'
+        'user_id',
     ];
 
     protected static function booted()

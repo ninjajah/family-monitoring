@@ -4,16 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\EventType;
 use App\Models\User;
-use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class EventTypeController extends Controller
 {
     public function index()
     {
         $EventTypes = EventType::with('user')->latest()->get();
+
         return Inertia::render('Admin/EventTypes/Index', [
-            'eventTypes' => $EventTypes
+            'eventTypes' => $EventTypes,
         ]);
     }
 
@@ -29,7 +30,7 @@ class EventTypeController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'user_id' => 'required|exists:users,id'
+            'user_id' => 'required|exists:users,id',
         ]);
 
         EventType::create($validated);
@@ -51,7 +52,7 @@ class EventTypeController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'user_id' => 'required|exists:users,id'
+            'user_id' => 'required|exists:users,id',
         ]);
 
         $eventType->update($validated);

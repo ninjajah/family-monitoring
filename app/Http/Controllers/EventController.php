@@ -6,16 +6,14 @@ use App\Models\Event;
 use App\Models\EventType;
 use App\Models\FamilyType;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class EventController extends Controller
 {
     /**
-     *
-     * @param Event $event
      * @throws HttpException
      */
     protected function checkEventPermissions(Event $event)
@@ -36,7 +34,7 @@ class EventController extends Controller
         $user = auth()->user();
         $query = Event::with(['eventType', 'familyType', 'user']);
 
-        if (!$user->hasRole('admin')) {
+        if (! $user->hasRole('admin')) {
             $query->where('user_id', $user->id);
         }
 

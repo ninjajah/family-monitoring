@@ -1,16 +1,13 @@
 <?php
 
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\EventTypeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\EventTypeController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\UserController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
-
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/', [SiteController::class, 'index'])->name('site.index');
@@ -66,4 +63,4 @@ Route::middleware(['auth', 'role:admin|user'])->group(function () {
     Route::get('/admin/reports/current', [ReportController::class, 'currentStatus'])->name('admin.reports.current');
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

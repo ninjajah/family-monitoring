@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Role;
-use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -14,18 +14,21 @@ class UserController extends Controller
     {
         $users = User::with('roles')->get();
         $roles = Role::all();
+
         return Inertia::render('Admin/Users/Index',
             [
                 'users' => $users,
-                'roles' => $roles
+                'roles' => $roles,
             ]
         );
     }
+
     public function create()
     {
         $roles = Role::all();
+
         return Inertia::render('Admin/Users/Create', [
-            'roles' => $roles
+            'roles' => $roles,
         ]);
     }
 
@@ -36,7 +39,7 @@ class UserController extends Controller
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:8|confirmed',
             'roles' => 'array',
-            'roles.*' => 'exists:roles,id'
+            'roles.*' => 'exists:roles,id',
         ]);
 
         $user = User::create([
@@ -51,10 +54,10 @@ class UserController extends Controller
             ->with('success', 'Пользователь успешно создан');
     }
 
-
     public function edit(User $user)
     {
         $roles = Role::all();
+
         return Inertia::render('Admin/Users/Edit', [
             'user' => $user->load('roles'),
             'roles' => $roles,
@@ -65,7 +68,7 @@ class UserController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $user->id,
+            'email' => 'required|email|unique:users,email,'.$user->id,
             'roles' => 'array',
         ]);
 
@@ -92,5 +95,4 @@ class UserController extends Controller
                 ->with('error', 'Ошибка при удалении пользователя');
         }
     }
-
 }

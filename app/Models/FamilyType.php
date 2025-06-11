@@ -12,7 +12,7 @@ class FamilyType extends Model
     protected $fillable = [
         'name',
         'description',
-        'user_id'
+        'user_id',
     ];
 
     public function events()
