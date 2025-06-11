@@ -28,11 +28,7 @@ class Event extends Model
         static::saving(function ($event) {
             $event->children_affected =
                 $event->biological_children +
-                $event->foster_children +
-                $event->disabled_children +
-                $event->disabled_adults +
-                $event->children_in_family +
-                $event->children_in_institution;
+                $event->foster_children;
 
             if ($event->children_affected <= 0) {
                 throw new \RuntimeException('Хотя бы одно поле должно быть больше 0');
