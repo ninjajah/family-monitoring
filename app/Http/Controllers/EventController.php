@@ -6,9 +6,10 @@ use App\Models\Event;
 use App\Models\EventType;
 use App\Models\FamilyType;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
+use Inertia\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class EventController extends Controller
@@ -16,7 +17,7 @@ class EventController extends Controller
     /**
      * @throws HttpException
      */
-    protected function checkEventPermissions(Event $event)
+    protected function checkEventPermissions(Event $event): void
     {
         $user = auth()->user();
 
@@ -29,12 +30,12 @@ class EventController extends Controller
         }
     }
 
-    public function index()
+    public function index(): Response
     {
         $user = auth()->user();
         $query = Event::with(['eventType', 'familyType', 'user']);
 
-        if (!$user->hasRole('admin')) {
+        if (! $user->hasRole('admin')) {
             $query->where('user_id', $user->id);
         }
 
@@ -45,7 +46,7 @@ class EventController extends Controller
         ]);
     }
 
-    public function create()
+    public function create(): Response
     {
         return Inertia::render('Admin/Events/Create', [
             'eventTypes' => EventType::all(),
@@ -54,9 +55,9 @@ class EventController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        $validator = Validator::make($request->all(), [
+        $validated = $request->validate([
             'event_type_id' => 'required|exists:event_types,id',
             'family_type_id' => 'required|exists:family_types,id',
             'biological_children' => 'required|integer|min:0',
@@ -69,35 +70,13 @@ class EventController extends Controller
             'user_id' => 'required|exists:users,id',
         ]);
 
-        $validator->after(function ($validator) use ($request) {
-            $childrenSum =
-                $request->biological_children +
-                $request->foster_children;
-
-            if ($childrenSum <= 0) {
-                $validator->errors()->add(
-                    'biological_children',
-                    'Хотя бы одно поле с количеством детей должно быть больше нуля'
-                );
-            }
-        });
-
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
-
-        $validated = $validator->validated();
-        $validated['children_affected'] =
-            $validated['biological_children'] +
-            $validated['foster_children'];
-
         Event::create($validated);
 
         return redirect()->route('admin.events.index')
             ->with('success', 'Событие успешно создано');
     }
 
-    public function edit(Event $event)
+    public function edit(Event $event): Response
     {
         $this->checkEventPermissions($event);
 
@@ -109,7 +88,7 @@ class EventController extends Controller
         ]);
     }
 
-    public function update(Request $request, Event $event)
+    public function update(Request $request, Event $event): RedirectResponse
     {
         $this->checkEventPermissions($event);
 
@@ -133,7 +112,7 @@ class EventController extends Controller
             ->with('success', 'Событие успешно обновлено');
     }
 
-    public function destroy(Event $event)
+    public function destroy(Event $event): RedirectResponse
     {
         try {
             $this->checkEventPermissions($event);

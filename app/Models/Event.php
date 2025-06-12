@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Validation\ValidationException;
 
 class Event extends Model
 {
@@ -26,12 +27,12 @@ class Event extends Model
     protected static function booted()
     {
         static::saving(function ($event) {
-            $event->children_affected =
-                $event->biological_children +
-                $event->foster_children;
+            $event->children_affected = $event->biological_children + $event->foster_children;
 
             if ($event->children_affected <= 0) {
-                throw new \RuntimeException('Хотя бы одно поле должно быть больше 0');
+                throw ValidationException::withMessages([
+                    'biological_children' => ['Хотя бы одно поле с количеством детей должно быть больше нуля'],
+                ]);
             }
         });
     }
