@@ -6,31 +6,12 @@ use App\Models\Event;
 use App\Models\EventType;
 use App\Models\FamilyType;
 use App\Models\User;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Inertia\Response;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class EventController extends Controller
 {
-    /**
-     * @throws HttpException
-     */
-    protected function checkEventPermissions(Event $event): void
-    {
-        $user = auth()->user();
-
-        if ($user->hasRole('admin')) {
-            return;
-        }
-
-        if ($event->user_id !== $user->id) {
-            abort(403, 'Вы можете работать только со своими событиями');
-        }
-    }
-
-    public function index(): Response
+    public function index()
     {
         $user = auth()->user();
         $query = Event::with(['eventType', 'familyType', 'user']);
@@ -46,7 +27,7 @@ class EventController extends Controller
         ]);
     }
 
-    public function create(): Response
+    public function create()
     {
         return Inertia::render('Admin/Events/Create', [
             'eventTypes' => EventType::all(),
@@ -55,7 +36,7 @@ class EventController extends Controller
         ]);
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
         $validated = $request->validate([
             'event_type_id' => 'required|exists:event_types,id',
@@ -76,10 +57,8 @@ class EventController extends Controller
             ->with('success', 'Событие успешно создано');
     }
 
-    public function edit(Event $event): Response
+    public function edit(Event $event)
     {
-        $this->checkEventPermissions($event);
-
         return Inertia::render('Admin/Events/Edit', [
             'event' => $event->load(['eventType', 'familyType', 'user']),
             'eventTypes' => EventType::all(),
@@ -88,14 +67,11 @@ class EventController extends Controller
         ]);
     }
 
-    public function update(Request $request, Event $event): RedirectResponse
+    public function update(Request $request, Event $event)
     {
-        $this->checkEventPermissions($event);
-
         $validated = $request->validate([
             'event_type_id' => 'required|exists:event_types,id',
             'family_type_id' => 'required|exists:family_types,id',
-            'children_affected' => 'required|integer|min:0',
             'biological_children' => 'required|integer|min:0',
             'foster_children' => 'required|integer|min:0',
             'disabled_children' => 'required|integer|min:0',
@@ -112,11 +88,9 @@ class EventController extends Controller
             ->with('success', 'Событие успешно обновлено');
     }
 
-    public function destroy(Event $event): RedirectResponse
+    public function destroy(Event $event)
     {
         try {
-            $this->checkEventPermissions($event);
-
             $event->delete();
 
             return redirect()->back()
